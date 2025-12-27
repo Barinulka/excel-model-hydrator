@@ -7,4 +7,12 @@
 /public/bundles/
 /var/
 /vendor/
+/.env
+/.env.dev
+/.editorconfig
+/.idea
+.idea
+.editorconfig
+.env
+.env-dev
 ###< symfony/framework-bundle ###
