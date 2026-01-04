@@ -1,0 +1,8 @@
+{
+    "sheets": {
+        "PL_BS_CF": {
+            "A103": { "type": "date", "label": "Дата старта", "required": true },
+            "B210": { "type": "number", "unit": "млн ₽", "description": "Капвложения" }
+        }
+    }
+}

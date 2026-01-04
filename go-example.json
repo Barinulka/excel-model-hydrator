@@ -1,0 +1,12 @@
+{
+    "template": "template_name.xlsx",
+    "data": {
+        "PL_BS_CF": {
+            "A103": "YYYY-MM-DD",
+            "B210": "value"
+        },
+        "Input": {
+            "H161": 9999
+        }
+    }
+}

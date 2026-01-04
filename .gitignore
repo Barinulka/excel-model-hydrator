@@ -1,5 +1,4 @@
 
-###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
 /.env.*.local
@@ -15,4 +14,4 @@
 .editorconfig
 .env
 .env-dev
-###< symfony/framework-bundle ###
+.DS_STORE
