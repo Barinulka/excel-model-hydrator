@@ -1,18 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello MainController!{% endblock %}
+{% block title %}FinModelPro{% endblock %}
 
 {% block body %}
-
-<div class="container">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/Users/aleksejbarinov/Обучение/PHP/excel-model-hydrator/src/Controller/MainController.php</code></li>
-        <li>Your template at <code>/Users/aleksejbarinov/Обучение/PHP/excel-model-hydrator/templates/main/index.html.twig</code></li>
-    </ul>
-
-    <div class="block" data-controller="hello"></div>
-</div>
+    <div class="container">
+        <h1>Главная страница</h1>
+        {% if app.user %}
+            <p>Вы вошли как <strong>{{ app.user.userIdentifier }}</strong>.</p>
+        {% else %}
+            <p>Вы не авторизованы. <a href="{{ path('app_login') }}">Войти</a> или <a href="{{ path('app_register') }}">зарегистрироваться</a>.</p>
+        {% endif %}
+    </div>
 {% endblock %}

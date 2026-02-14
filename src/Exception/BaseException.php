@@ -14,7 +14,7 @@ class BaseException extends \Exception
         int $httpStatusCode = 500,
         array $context = [],
         int $code = 0,
-        Throwable $previous = null
+        ?Throwable $previous = null
     ) {
         $this->httpStatusCode = $httpStatusCode;
         $this->context = $context;
