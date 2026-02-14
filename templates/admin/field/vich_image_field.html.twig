@@ -1,0 +1,5 @@
+{% if vich_uploader_asset(entity.instance, field.property) != null %}
+    <img src="{{ vich_uploader_asset(entity.instance, field.property) }}" width="16px" height="16px" alt="null"/>
+{% else %}
+    -
+{% endif %}

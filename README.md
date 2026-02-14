@@ -17,6 +17,8 @@
 composer install
 ```
 
+Команда `composer install` запускает auto-scripts (включая `assets:install` и `ckeditor:install`).
+
 2. Поднять контейнеры (Go hydrator + PostgreSQL):
 
 ```bash
@@ -41,6 +43,8 @@ symfony server:start -d
 php -S 127.0.0.1:8000 -t public
 ```
 
+Важно: веб-сервер должен обслуживать директорию `public` как document root.
+
 ## Проверка
 
 - Приложение: `http://127.0.0.1:8000/`
@@ -60,4 +64,20 @@ docker compose ps
 docker compose logs -f excel-hydrator database
 docker compose down
 symfony server:stop
+```
+
+## CKEditor и ассеты
+
+Если в админке CKEditor отображается как обычный `textarea` или в консоли есть `404` на
+`/bundles/fosckeditor/*`, переустановите ассеты:
+
+```bash
+php bin/console assets:install public
+php bin/console cache:clear
+```
+
+Проверьте, что файлы существуют:
+
+```bash
+ls -la public/bundles/fosckeditor
 ```

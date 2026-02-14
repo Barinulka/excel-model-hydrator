@@ -1,3 +1,4 @@
 @import "./layouts/base.css";
 @import "./layouts/header/header.css";
 @import "./pages/auth.css";
+@import "./pages/error.css";

@@ -46,6 +46,7 @@ final class RegistrationController extends AbstractController
             if ($errors === []) {
                 $user = new User();
                 $user->setEmail($email);
+                $user->setRoles(['ROLE_USER']);
                 $user->setPassword($passwordHasher->hashPassword($user, $plainPassword));
 
                 $entityManager->persist($user);

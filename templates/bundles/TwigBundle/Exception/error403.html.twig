@@ -1,0 +1,9 @@
+{% extends 'bundles/TwigBundle/Exception/error.html.twig' %}
+
+{% block title %}Ошибка 403{% endblock %}
+{% block error_title %}Доступ запрещен{% endblock %}
+{% block error_description %}У вас нет прав для просмотра этой страницы. Войдите под аккаунтом с нужной ролью.{% endblock %}
+
+{% block error_actions %}
+    <a href="{{ path('app_login') }}" class="error-button error-button_secondary">Войти</a>
+{% endblock %}

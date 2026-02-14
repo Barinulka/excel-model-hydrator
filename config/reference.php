@@ -37,7 +37,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  * @psalm-type ArgumentsType = list<mixed>|array<string, mixed>
  * @psalm-type CallType = array<string, ArgumentsType>|array{0:string, 1?:ArgumentsType, 2?:bool}|array{method:string, arguments?:ArgumentsType, returns_clone?:bool}
  * @psalm-type TagsType = list<string|array<string, array<string, mixed>>> // arrays inside the list must have only one element, with the tag name as the key
- * @psalm-type CallbackType = string|array{0:string|ReferenceConfigurator,1:string}|\Closure|ReferenceConfigurator
+ * @psalm-type CallbackType = string|array{0:string|ReferenceConfigurator,1:string}|\Closure|ReferenceConfigurator|ExpressionConfigurator
  * @psalm-type DeprecationType = array{package: string, version: string, message?: string}
  * @psalm-type DefaultsType = array{
  *     public?: bool,
@@ -148,7 +148,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         cookie_name?: scalar|Param|null, // The name of the cookie to use when using stateless protection. // Default: "csrf-token"
  *     },
  *     form?: bool|array{ // Form configuration
- *         enabled?: bool|Param, // Default: false
+ *         enabled?: bool|Param, // Default: true
  *         csrf_protection?: bool|array{
  *             enabled?: scalar|Param|null, // Default: null
  *             token_id?: scalar|Param|null, // Default: null
@@ -299,7 +299,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         },
  *     },
  *     translator?: bool|array{ // Translator configuration
- *         enabled?: bool|Param, // Default: false
+ *         enabled?: bool|Param, // Default: true
  *         fallbacks?: list<scalar|Param|null>,
  *         logging?: bool|Param, // Default: false
  *         formatter?: scalar|Param|null, // Default: "translator.formatter.default"
@@ -327,7 +327,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         }>,
  *     },
  *     validation?: bool|array{ // Validation configuration
- *         enabled?: bool|Param, // Default: false
+ *         enabled?: bool|Param, // Default: true
  *         enable_attributes?: bool|Param, // Default: true
  *         static_method?: list<scalar|Param|null>,
  *         translation_domain?: scalar|Param|null, // Default: "validators"
@@ -638,7 +638,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         }>,
  *     },
  *     uid?: bool|array{ // Uid configuration
- *         enabled?: bool|Param, // Default: false
+ *         enabled?: bool|Param, // Default: true
  *         default_uuid_version?: 7|6|4|1|Param, // Default: 7
  *         name_based_uuid_version?: 5|3|Param, // Default: 5
  *         name_based_uuid_namespace?: scalar|Param|null,
@@ -875,7 +875,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         enabled?: bool|Param, // Default: false
  *     },
  *     html?: bool|array{
- *         enabled?: bool|Param, // Default: false
+ *         enabled?: bool|Param, // Default: true
  *     },
  *     markdown?: bool|array{
  *         enabled?: bool|Param, // Default: false
@@ -1437,6 +1437,153 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     enable_profiler?: bool|Param, // Whether or not to enable the profiler collector to calculate and visualize migration status. This adds some queries overhead. // Default: false
  *     transactional?: bool|Param, // Whether or not to wrap migrations in a single transaction. // Default: true
  * }
+ * @psalm-type TwigComponentConfig = array{
+ *     defaults?: array<string, string|array{ // Default: ["__deprecated__use_old_naming_behavior"]
+ *         template_directory?: scalar|Param|null, // Default: "components"
+ *         name_prefix?: scalar|Param|null, // Default: ""
+ *     }>,
+ *     anonymous_template_directory?: scalar|Param|null, // Defaults to `components`
+ *     profiler?: bool|array{ // Enables the profiler for Twig Component
+ *         enabled?: bool|Param, // Default: "%kernel.debug%"
+ *         collect_components?: bool|Param, // Collect components instances // Default: true
+ *     },
+ *     controllers_json?: scalar|Param|null, // Deprecated: The "twig_component.controllers_json" config option is deprecated, and will be removed in 3.0. // Default: null
+ * }
+ * @psalm-type FosCkEditorConfig = array{
+ *     enable?: bool|Param, // Default: true
+ *     async?: bool|Param, // Default: false
+ *     auto_inline?: bool|Param, // Default: true
+ *     inline?: bool|Param, // Default: false
+ *     autoload?: bool|Param, // Default: true
+ *     jquery?: bool|Param, // Default: false
+ *     require_js?: bool|Param, // Default: false
+ *     input_sync?: bool|Param, // Default: false
+ *     base_path?: scalar|Param|null, // Default: "bundles/fosckeditor/"
+ *     js_path?: scalar|Param|null, // Default: "bundles/fosckeditor/ckeditor.js"
+ *     jquery_path?: scalar|Param|null, // Default: "bundles/fosckeditor/adapters/jquery.js"
+ *     default_config?: scalar|Param|null, // Default: null
+ *     configs?: array<string, array<string, mixed>>,
+ *     plugins?: array<string, array{ // Default: []
+ *         path?: scalar|Param|null,
+ *         filename?: scalar|Param|null,
+ *     }>,
+ *     styles?: array<string, list<array{ // Default: []
+ *             name?: scalar|Param|null,
+ *             type?: scalar|Param|null,
+ *             widget?: scalar|Param|null,
+ *             element?: mixed,
+ *             styles?: array<string, scalar|Param|null>,
+ *             attributes?: array<string, scalar|Param|null>,
+ *         }>>,
+ *     templates?: array<string, array{ // Default: []
+ *         imagesPath?: scalar|Param|null,
+ *         templates?: list<array{ // Default: []
+ *             title?: scalar|Param|null,
+ *             image?: scalar|Param|null,
+ *             description?: scalar|Param|null,
+ *             html?: scalar|Param|null,
+ *             template?: scalar|Param|null,
+ *             template_parameters?: array<string, scalar|Param|null>,
+ *         }>,
+ *     }>,
+ *     filebrowsers?: array<string, scalar|Param|null>,
+ *     toolbars?: array{
+ *         configs?: array<string, list<mixed>>,
+ *         items?: array<string, list<mixed>>,
+ *     },
+ * }
+ * @psalm-type VichUploaderConfig = array{
+ *     default_filename_attribute_suffix?: scalar|Param|null, // Default: "_name"
+ *     db_driver: scalar|Param|null,
+ *     storage?: scalar|Param|null, // Default: "file_system"
+ *     use_flysystem_to_resolve_uri?: bool|Param, // Default: false
+ *     twig?: scalar|Param|null, // twig requires templating // Default: true
+ *     form?: scalar|Param|null, // Default: true
+ *     metadata?: array{
+ *         cache?: scalar|Param|null, // Default: "file"
+ *         type?: scalar|Param|null, // Default: "attribute"
+ *         file_cache?: array{
+ *             dir?: scalar|Param|null, // Default: "%kernel.cache_dir%/vich_uploader"
+ *         },
+ *         auto_detection?: bool|Param, // Default: true
+ *         directories?: list<array{ // Default: []
+ *             path: scalar|Param|null,
+ *             namespace_prefix?: scalar|Param|null, // Default: ""
+ *         }>,
+ *     },
+ *     mappings?: array<string, array{ // Default: []
+ *         uri_prefix?: scalar|Param|null, // Default: "/uploads"
+ *         upload_destination?: scalar|Param|null, // Default: null
+ *         namer?: string|array{
+ *             service?: scalar|Param|null, // Default: null
+ *             options?: mixed, // Default: null
+ *         },
+ *         directory_namer?: string|array{
+ *             service?: scalar|Param|null, // Default: null
+ *             options?: mixed, // Default: null
+ *         },
+ *         delete_on_remove?: scalar|Param|null, // Default: true
+ *         erase_fields?: scalar|Param|null, // Default: true
+ *         delete_on_update?: scalar|Param|null, // Default: true
+ *         inject_on_load?: scalar|Param|null, // Default: false
+ *         namer_keep_extension?: scalar|Param|null, // Default: false
+ *         db_driver?: scalar|Param|null, // Default: null
+ *     }>,
+ * }
+ * @psalm-type StofDoctrineExtensionsConfig = array{
+ *     orm?: array<string, array{ // Default: []
+ *         translatable?: scalar|Param|null, // Default: false
+ *         timestampable?: scalar|Param|null, // Default: false
+ *         blameable?: scalar|Param|null, // Default: false
+ *         sluggable?: scalar|Param|null, // Default: false
+ *         tree?: scalar|Param|null, // Default: false
+ *         loggable?: scalar|Param|null, // Default: false
+ *         ip_traceable?: scalar|Param|null, // Default: false
+ *         sortable?: scalar|Param|null, // Default: false
+ *         softdeleteable?: scalar|Param|null, // Default: false
+ *         uploadable?: scalar|Param|null, // Default: false
+ *         reference_integrity?: scalar|Param|null, // Default: false
+ *     }>,
+ *     mongodb?: array<string, array{ // Default: []
+ *         translatable?: scalar|Param|null, // Default: false
+ *         timestampable?: scalar|Param|null, // Default: false
+ *         blameable?: scalar|Param|null, // Default: false
+ *         sluggable?: scalar|Param|null, // Default: false
+ *         tree?: scalar|Param|null, // Default: false
+ *         loggable?: scalar|Param|null, // Default: false
+ *         ip_traceable?: scalar|Param|null, // Default: false
+ *         sortable?: scalar|Param|null, // Default: false
+ *         softdeleteable?: scalar|Param|null, // Default: false
+ *         uploadable?: scalar|Param|null, // Default: false
+ *         reference_integrity?: scalar|Param|null, // Default: false
+ *     }>,
+ *     class?: array{
+ *         translatable?: scalar|Param|null, // Default: "Gedmo\\Translatable\\TranslatableListener"
+ *         timestampable?: scalar|Param|null, // Default: "Gedmo\\Timestampable\\TimestampableListener"
+ *         blameable?: scalar|Param|null, // Default: "Gedmo\\Blameable\\BlameableListener"
+ *         sluggable?: scalar|Param|null, // Default: "Gedmo\\Sluggable\\SluggableListener"
+ *         tree?: scalar|Param|null, // Default: "Gedmo\\Tree\\TreeListener"
+ *         loggable?: scalar|Param|null, // Default: "Gedmo\\Loggable\\LoggableListener"
+ *         sortable?: scalar|Param|null, // Default: "Gedmo\\Sortable\\SortableListener"
+ *         softdeleteable?: scalar|Param|null, // Default: "Gedmo\\SoftDeleteable\\SoftDeleteableListener"
+ *         uploadable?: scalar|Param|null, // Default: "Gedmo\\Uploadable\\UploadableListener"
+ *         reference_integrity?: scalar|Param|null, // Default: "Gedmo\\ReferenceIntegrity\\ReferenceIntegrityListener"
+ *     },
+ *     softdeleteable?: array{
+ *         handle_post_flush_event?: bool|Param, // Default: false
+ *     },
+ *     uploadable?: array{
+ *         default_file_path?: scalar|Param|null, // Default: null
+ *         mime_type_guesser_class?: scalar|Param|null, // Default: "Stof\\DoctrineExtensionsBundle\\Uploadable\\MimeTypeGuesserAdapter"
+ *         default_file_info_class?: scalar|Param|null, // Default: "Stof\\DoctrineExtensionsBundle\\Uploadable\\UploadedFileInfo"
+ *         validate_writable_directory?: bool|Param, // Default: true
+ *     },
+ *     default_locale?: scalar|Param|null, // Default: "en"
+ *     translation_fallback?: bool|Param, // Default: false
+ *     persist_default_translation?: bool|Param, // Default: false
+ *     skip_translation_on_load?: bool|Param, // Default: false
+ *     metadata_cache_pool?: scalar|Param|null, // Default: null
+ * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
  *     parameters?: ParametersConfig,
@@ -1449,6 +1596,10 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     doctrine?: DoctrineConfig,
  *     security?: SecurityConfig,
  *     doctrine_migrations?: DoctrineMigrationsConfig,
+ *     twig_component?: TwigComponentConfig,
+ *     fos_ck_editor?: FosCkEditorConfig,
+ *     vich_uploader?: VichUploaderConfig,
+ *     stof_doctrine_extensions?: StofDoctrineExtensionsConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -1463,6 +1614,10 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         doctrine?: DoctrineConfig,
  *         security?: SecurityConfig,
  *         doctrine_migrations?: DoctrineMigrationsConfig,
+ *         twig_component?: TwigComponentConfig,
+ *         fos_ck_editor?: FosCkEditorConfig,
+ *         vich_uploader?: VichUploaderConfig,
+ *         stof_doctrine_extensions?: StofDoctrineExtensionsConfig,
  *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
@@ -1476,6 +1631,10 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         doctrine?: DoctrineConfig,
  *         security?: SecurityConfig,
  *         doctrine_migrations?: DoctrineMigrationsConfig,
+ *         twig_component?: TwigComponentConfig,
+ *         fos_ck_editor?: FosCkEditorConfig,
+ *         vich_uploader?: VichUploaderConfig,
+ *         stof_doctrine_extensions?: StofDoctrineExtensionsConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
@@ -1489,6 +1648,10 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         doctrine?: DoctrineConfig,
  *         security?: SecurityConfig,
  *         doctrine_migrations?: DoctrineMigrationsConfig,
+ *         twig_component?: TwigComponentConfig,
+ *         fos_ck_editor?: FosCkEditorConfig,
+ *         vich_uploader?: VichUploaderConfig,
+ *         stof_doctrine_extensions?: StofDoctrineExtensionsConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,
