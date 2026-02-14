@@ -1,0 +1,12 @@
+body {
+    font: 18px/1.5 sans-serif;
+    color: #000;
+  min-width: 1190px;
+}
+
+.container {
+  width: 1190px;
+  height: 100%;
+  padding: 0 15px;
+  margin: 0 auto;
+}

@@ -22,14 +22,13 @@ class ExcelModelGenerator
      */
     public function generateFromRequest(array $request): array
     {
-        $template = $request['template'] ?? '';
-        $data = $request['data'] ?? [];
-
-        $input = new ExcelInputData($request['sheetData'] ?? []);
+        $sheetData = $request['sheetData'] ?? $request['data'] ?? [];
+        $input = new ExcelInputData($sheetData);
         $this->validator->validate($input);
 
+        $template = $request['template'] ?? $this->resolveTemplate($request['modelType'] ?? null);
         $hydrationDTO = new GoHydrationDTO(
-            template: $this->resolveTemplate($requestData['modelType'] ?? null),
+            template: $template,
             data: $input->sheetData
         );
 
