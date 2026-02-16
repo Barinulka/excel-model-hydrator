@@ -1,0 +1,31 @@
+.footer {
+    margin-top: 24px;
+    border-top: 1px solid #edf0f4;
+    background: #fff;
+}
+
+.footer__layout {
+    min-height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.footer__copy,
+.footer__note {
+    color: #687589;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+@media (max-width: 640px) {
+    .footer__layout {
+        min-height: 64px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 6px;
+        padding: 12px 0;
+    }
+}

@@ -1,10 +1,34 @@
 import './stimulus_bootstrap.js';
-/*
- * Welcome to your app's main JavaScript file!
- *
- * This file will be included onto the page via the importmap() Twig function,
- * which should already be in your base.html.twig.
- */
 import './styles/app.css';
 
-console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
+const applyImageFallback = (target) => {
+    if (!(target instanceof HTMLImageElement)) {
+        return;
+    }
+
+    const fallbackSrc = target.dataset.fallbackSrc || document.body?.dataset.defaultImageFallbackSrc;
+
+    if (!fallbackSrc || target.dataset.fallbackApplied === '1') {
+        return;
+    }
+
+    if (target.currentSrc === fallbackSrc || target.getAttribute('src') === fallbackSrc) {
+        target.dataset.fallbackApplied = '1';
+        return;
+    }
+
+    target.dataset.fallbackApplied = '1';
+    target.src = fallbackSrc;
+};
+
+document.addEventListener('error', (event) => {
+    applyImageFallback(event.target);
+}, true);
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('img').forEach((image) => {
+        if (!image.getAttribute('src') || image.getAttribute('src').trim() === '') {
+            applyImageFallback(image);
+        }
+    });
+});

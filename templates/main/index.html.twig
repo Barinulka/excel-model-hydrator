@@ -3,12 +3,38 @@
 {% block title %}FinModelPro{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h1>Главная страница</h1>
-        {% if app.user %}
-            <p>Вы вошли как <strong>{{ app.user.userIdentifier }}</strong>.</p>
-        {% else %}
-            <p>Вы не авторизованы. <a href="{{ path('app_login') }}">Войти</a> или <a href="{{ path('app_register') }}">зарегистрироваться</a>.</p>
-        {% endif %}
-    </div>
+    {% set page = data.page ?? null %}
+    {% set fallbackImage = asset('placeholders/content-placeholder.svg') %}
+    {% set heroTitle = page and page.title ? page.title : 'Финансовая модель под задачи вашего бизнеса' %}
+    {% set heroDescription = page and page.description ? page.description : '<p>Собирайте структуру расходов и доходов в одном месте, анализируйте сценарии и принимайте решения на основе данных.</p>' %}
+    {% set heroImage = page ? vich_uploader_asset(page, 'main_image_imageFile') : null %}
+    {% if not heroImage %}
+        {% set heroImage = fallbackImage %}
+    {% endif %}
+
+    <main class="main-page">
+        <section class="main" aria-labelledby="main-title">
+            <div class="container">
+                <div class="main__layout">
+                    <div class="main__content">
+                        <h1 id="main-title" class="main__title">{{ heroTitle }}</h1>
+                        <div class="main__text">
+                            {{ heroDescription|raw }}
+                        </div>
+                    </div>
+
+                    <div class="main__media">
+                        <img
+                            class="main__image"
+                            src="{{ heroImage }}"
+                            data-fallback-src="{{ fallbackImage }}"
+                            alt=" "
+                            fetchpriority="high"
+                        >
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+    </main>
 {% endblock %}

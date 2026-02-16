@@ -42,6 +42,8 @@ final class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
+        yield MenuItem::linkToUrl('На сайт', 'fa fa-globe', '/')->setLinkTarget('_blank');
+        yield MenuItem::section('&nbsp;');
         yield MenuItem::linkToDashboard('Главная', 'fa fa-home');
         yield MenuItem::section('Модули');
         yield from $this->adminModuleProvider->getMenuItems();

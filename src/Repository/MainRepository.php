@@ -16,6 +16,17 @@ class MainRepository extends ServiceEntityRepository
         parent::__construct($registry, Main::class);
     }
 
+    public function getPageData(array $options = []): ?Main
+    {
+        $qb = $this->createQueryBuilder('main');
+
+        return $qb
+            ->orderBy('main.id', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     //    /**
     //     * @return Main[] Returns an array of Main objects
     //     */
