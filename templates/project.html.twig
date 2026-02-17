@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}Проекты | FinModelPro{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('styles/project.css') }}">
+        {% endblock %}
+
+        {% block javascripts %}
+            {% block importmap %}{{ importmap('app') }}{% endblock %}
+        {% endblock %}
+    </head>
+    <body class="project-layout">
+        <div class="project-shell" {% block project_shell_attributes %}{% endblock %}>
+            <aside class="project-sidebar">
+                <a class="project-sidebar__brand" href="{{ path('app_main') }}">
+                    <span class="project-sidebar__brand-mark">FM</span>
+                    <span class="project-sidebar__brand-title">FinModelPro</span>
+                </a>
+
+                {% block project_sidebar %}
+                    <nav class="project-sidebar__nav" aria-label="Навигация проекта">
+                        <a class="project-sidebar__link project-sidebar__link_active" href="{{ path('app_project') }}">
+                            Проекты
+                        </a>
+                    </nav>
+                {% endblock %}
+            </aside>
+
+            <div class="project-main-wrap">
+                <header class="project-topbar">
+                    <div class="project-topbar__title-wrap">
+                        <p class="project-topbar__caption">Рабочее пространство</p>
+                        <h1 class="project-topbar__title">{% block project_page_title %}Панель проекта{% endblock %}</h1>
+                    </div>
+                    {% block project_topbar_actions %}{% endblock %}
+                </header>
+
+                <main class="project-main">
+                    {% block body %}{% endblock %}
+                </main>
+            </div>
+        </div>
+    </body>
+</html>

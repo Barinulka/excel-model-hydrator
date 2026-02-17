@@ -1,20 +1,54 @@
-{% extends 'base.html.twig' %}
+{% extends 'project.html.twig' %}
 
-{% block title %}Hello ProjectController!{% endblock %}
+{% block title %}Проекты | FinModelPro{% endblock %}
+{% block project_page_title %}Мои проекты{% endblock %}
+
+{% set selectedProject = projects|first %}
+
+{% block project_shell_attributes %}data-controller="project-selector"{% endblock %}
+
+{% block project_sidebar %}
+    <section class="project-list" aria-label="Список проектов">
+        <h2 class="project-list__title">Проекты</h2>
+        <p class="project-list__description">Выберите проект, чтобы увидеть краткую информацию и перейти к модели.</p>
+
+        <div class="project-list__items" role="list">
+            {% for project in projects %}
+                <button
+                    type="button"
+                    role="listitem"
+                    class="project-list__item{{ loop.first ? ' project-list__item_active' : '' }}"
+                    data-action="click->project-selector#select"
+                    data-project-selector-target="item"
+                    data-project-name="{{ project.name|e('html_attr') }}"
+                    data-project-description="{{ project.description|e('html_attr') }}"
+                    data-project-updated="{{ project.updatedAt|e('html_attr') }}"
+                    data-project-scenarios="{{ project.scenariosCount }}"
+                    data-project-period="{{ project.period|e('html_attr') }}"
+                    data-project-model-url="{{ project.modelUrl|e('html_attr') }}"
+                >
+                    <span class="project-list__name">{{ project.name }}</span>
+                    <span class="project-list__meta">{{ project.updatedAt }}</span>
+                </button>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <section class="project-workspace" aria-labelledby="project-workspace-title">
+        <header class="project-workspace__header">
+            <div>
+                <h2 id="project-workspace-title" class="project-workspace__title">Стартовая страница проекта</h2>
+                <p class="project-workspace__lead">Создавайте новые проекты, выбирайте существующие и переходите в модель.</p>
+            </div>
+            <a class="project-create-btn" href="#">Создать проект</a>
+        </header>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/Users/aleksejbarinov/Обучение/PHP/excel-model-hydrator/src/Controller/ProjectController.php</code></li>
-        <li>Your template at <code>/Users/aleksejbarinov/Обучение/PHP/excel-model-hydrator/templates/project/index.html.twig</code></li>
-    </ul>
-</div>
+        {% if selectedProject %}
+            {{ include('project/blocks/_project_summary_article.html.twig', { project: selectedProject }) }}
+        {% else %}
+            {{ include('project/blocks/_project_empty_article.html.twig') }}
+        {% endif %}
+    </section>
 {% endblock %}

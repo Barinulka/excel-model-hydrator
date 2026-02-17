@@ -1,0 +1,25 @@
+<article class="project-summary" data-project-selector-target="summary">
+    <div class="project-summary__head">
+        <h3 class="project-summary__title" data-project-selector-target="name">{{ project.name }}</h3>
+        <p class="project-summary__description" data-project-selector-target="description">{{ project.description }}</p>
+    </div>
+
+    <dl class="project-summary__stats">
+        <div class="project-summary__stat">
+            <dt>Обновлен</dt>
+            <dd data-project-selector-target="updated">{{ project.updatedAt }}</dd>
+        </div>
+        <div class="project-summary__stat">
+            <dt>Сценариев</dt>
+            <dd data-project-selector-target="scenarios">{{ project.scenariosCount }}</dd>
+        </div>
+        <div class="project-summary__stat">
+            <dt>Горизонт</dt>
+            <dd data-project-selector-target="period">{{ project.period }}</dd>
+        </div>
+    </dl>
+
+    <div class="project-summary__actions">
+        <a class="project-model-btn" data-project-selector-target="modelLink" href="{{ project.modelUrl }}">К модели</a>
+    </div>
+</article>
