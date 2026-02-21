@@ -11,38 +11,55 @@ final class ProjectController extends AbstractController
     #[Route('/project', name: 'app_project')]
     public function index(): Response
     {
-        $projects = [
-            [
-                'id' => 1,
-                'name' => 'Marketplace 2026',
-                'description' => 'Финмодель онлайн-платформы с подпиской и рекламной монетизацией.',
-                'updatedAt' => '16 февраля 2026',
-                'scenariosCount' => 4,
-                'period' => '24 месяца',
-                'modelUrl' => '#',
-            ],
-            [
-                'id' => 2,
-                'name' => 'Производство EcoPack',
-                'description' => 'Модель запуска линии биоразлагаемой упаковки с тремя сценариями загрузки.',
-                'updatedAt' => '14 февраля 2026',
-                'scenariosCount' => 3,
-                'period' => '36 месяцев',
-                'modelUrl' => '#',
-            ],
-            [
-                'id' => 3,
-                'name' => 'Retail Expansion',
-                'description' => 'Расширение сети точек продаж с анализом сезонности и промо-кампаний.',
-                'updatedAt' => '10 февраля 2026',
-                'scenariosCount' => 5,
-                'period' => '18 месяцев',
-                'modelUrl' => '#',
-            ],
-        ];
+        // $projects = [
+        //     [
+        //         'id' => 1,
+        //         'name' => 'Marketplace 2026',
+        //         'description' => 'Финмодель онлайн-платформы с подпиской и рекламной монетизацией.',
+        //         'updatedAt' => '16 февраля 2026',
+        //         'scenariosCount' => 4,
+        //         'period' => '24 месяца',
+        //         'modelUrl' => '#',
+        //     ],
+        //     [
+        //         'id' => 2,
+        //         'name' => 'Производство EcoPack',
+        //         'description' => 'Модель запуска линии биоразлагаемой упаковки с тремя сценариями загрузки.',
+        //         'updatedAt' => '14 февраля 2026',
+        //         'scenariosCount' => 3,
+        //         'period' => '36 месяцев',
+        //         'modelUrl' => '#',
+        //     ],
+        //     [
+        //         'id' => 3,
+        //         'name' => 'Retail Expansion',
+        //         'description' => 'Расширение сети точек продаж с анализом сезонности и промо-кампаний.',
+        //         'updatedAt' => '10 февраля 2026',
+        //         'scenariosCount' => 5,
+        //         'period' => '18 месяцев',
+        //         'modelUrl' => '#',
+        //     ],
+        // ];
 
         return $this->render('project/index.html.twig', [
-            'projects' => $projects,
+            'projects' => $projects ?? [],
         ]);
+    }
+
+    #[Route('/project/new', name: 'app_add_project')]
+    public function add(): Response
+    {
+        return $this->render('project/add.html.twig', []);
+    }
+
+    private function getAuthorizedUser(): User
+    {
+        /** @var User|null $user */
+        $user = $this->getUser();
+        if (!$user instanceof User) {
+            throw $this->createAccessDeniedException();
+        }
+
+        return $user;
     }
 }

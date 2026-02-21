@@ -5,10 +5,13 @@ namespace App\Entity;
 use App\Repository\ProjectRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
 class Project
 {
+    use TimestampableEntity;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -22,6 +25,9 @@ class Project
 
     #[ORM\ManyToOne(inversedBy: 'projects')]
     private ?User $owner = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $code = null;
 
     public function getId(): ?int
     {
@@ -60,6 +66,18 @@ class Project
     public function setOwner(?User $owner): static
     {
         $this->owner = $owner;
+
+        return $this;
+    }
+
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    public function setCode(?string $code): static
+    {
+        $this->code = $code;
 
         return $this;
     }

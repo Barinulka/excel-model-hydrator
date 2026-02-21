@@ -42,7 +42,7 @@
                 <h2 id="project-workspace-title" class="project-workspace__title">Стартовая страница проекта</h2>
                 <p class="project-workspace__lead">Создавайте новые проекты, выбирайте существующие и переходите в модель.</p>
             </div>
-            <a class="project-create-btn" href="#">Создать проект</a>
+            <a class="project-create-btn" href="{{ path('app_add_project') }}">Создать проект</a>
         </header>
 
         {% if selectedProject %}

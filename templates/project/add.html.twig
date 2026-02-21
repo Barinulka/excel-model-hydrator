@@ -1,0 +1,59 @@
+{% extends 'project.html.twig' %}
+
+{% block title %}Создание проекта | FinModelPro{% endblock %}
+{% block project_page_title %}Новый проект{% endblock %}
+
+{% block project_sidebar %}
+    <section class="project-list" aria-label="Навигация по проектам">
+        <h2 class="project-list__title">Создание проекта</h2>
+        <p class="project-list__description">Заполните основные параметры проекта. После создания вы добавите модели сбора данных.</p>
+    </section>
+{% endblock %}
+
+{% block body %}
+    <section class="project-workspace" aria-labelledby="project-create-title">
+        <header class="project-workspace__header project-workspace__header_compact">
+            <div>
+                <h2 id="project-create-title" class="project-workspace__title">Паспорт проекта</h2>
+                <p class="project-workspace__lead">Начните с названия и контекста. Это базовая настройка перед добавлением вложенных моделей.</p>
+            </div>
+            <a class="project-model-btn" href="{{ path('app_project') }}">Вернуться к проектам</a>
+        </header>
+
+        <article class="project-form-card">
+            <form class="project-form" method="post" action="#" novalidate>
+                <div class="project-form__group">
+                    <label class="project-form__label" for="project_name">
+                        Название проекта
+                        <span class="project-form__required">*</span>
+                    </label>
+                    <input
+                        id="project_name"
+                        class="project-form__input"
+                        type="text"
+                        name="name"
+                        placeholder="Например: Retail Expansion 2026"
+                        maxlength="255"
+                        required
+                    >
+                </div>
+
+                <div class="project-form__group">
+                    <label class="project-form__label" for="project_description">Описание</label>
+                    <textarea
+                        id="project_description"
+                        class="project-form__textarea"
+                        name="description"
+                        rows="6"
+                        placeholder="Коротко опишите цель проекта, бизнес-контекст и ключевые ограничения"
+                    ></textarea>
+                </div>
+
+                <div class="project-form__actions">
+                    <a class="project-model-btn" href="{{ path('app_project') }}">Отмена</a>
+                    <button class="project-create-btn" type="button">Создать проект</button>
+                </div>
+            </form>
+        </article>
+    </section>
+{% endblock %}
